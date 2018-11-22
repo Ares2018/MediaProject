@@ -18,7 +18,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.zjrb.daily.mediaselector.MediaBaseActivity;
 import com.zjrb.daily.mediaselector.R;
 import com.zjrb.daily.mediaselector.binder.MediaBinder;
 import com.zjrb.daily.mediaselector.dao.LocalMediaDaoHelper;
@@ -62,15 +61,10 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
     private File mTakePicFile;
 
     /**
-     * 最大个数
-     */
-    public static final String MAX_NUM = "max_num";
-    /**
      * 选择的照片返回数据 key
      */
     public static final String KEY_DATA = "key_data";
 
-    public static final String SHOW_SELECTED_NUM = "show_selected_num";
 
 
     private ArrayList<MediaEntity> selectedList = new ArrayList<>();
@@ -82,7 +76,7 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
         setContentView(R.layout.activity_media_select);
         initView();
         StatusBarUtil.immersive(this);
-        initState(savedInstanceState);
+        initState();
         initPermission();
     }
 
@@ -102,14 +96,9 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
 
     }
 
-    private void initState(Bundle savedState) {
-        if (savedState != null) {
-            maxNum = savedState.getInt(MAX_NUM, maxNum);
-            isShowSelectedNum = savedState.getBoolean(SHOW_SELECTED_NUM, true);
-        } else {
-            maxNum = getIntent().getIntExtra(MAX_NUM, maxNum);
-            isShowSelectedNum = getIntent().getBooleanExtra(SHOW_SELECTED_NUM, true);
-        }
+    private void initState() {
+        maxNum = config.maxSelectNum;
+        isShowSelectedNum = config.isShowSelectedNum;
     }
 
     private void initPermission() {
