@@ -1,0 +1,19 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.zjrb.daily.mediaselector" >
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <application>
+        <activity android:name=".ui.MediaSelectActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="@string/data_scheme"
+                    android:host="@string/data_host"
+                    android:path="/MediaSelectActivity"
+                    />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>
