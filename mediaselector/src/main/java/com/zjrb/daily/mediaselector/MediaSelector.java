@@ -1,10 +1,18 @@
 package com.zjrb.daily.mediaselector;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
+import com.zjrb.daily.mediaselector.config.MediaConfig;
+import com.zjrb.daily.mediaselector.entity.MediaEntity;
+
+import java.io.Serializable;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
 * media选择统一工厂
 * @author zhengy
@@ -38,6 +46,23 @@ public final class MediaSelector {
 
     public MediaSelectonModel getModel(){
         return new MediaSelectonModel(this);
+    }
+
+
+    public static Intent putIntentResult(List<MediaEntity> data){
+        return new Intent().putExtra(MediaConfig.EXTRA_RESULT_SELECTION, (Serializable) data);
+    }
+
+    public static List<MediaEntity> obtainSelectResult(Intent data) {
+        List<MediaEntity> result = new ArrayList<>();
+        if (data != null) {
+            result = (List<MediaEntity>) data.getSerializableExtra(MediaConfig.EXTRA_RESULT_SELECTION);
+            if (result == null) {
+                result = new ArrayList<>();
+            }
+            return result;
+        }
+        return result;
     }
 
     /**

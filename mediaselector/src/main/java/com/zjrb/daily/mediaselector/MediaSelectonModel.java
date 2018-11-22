@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 
+import com.zjrb.daily.mediaselector.config.MediaSelectionConfig;
 import com.zjrb.daily.mediaselector.ui.MediaSelectActivity;
 import com.zjrb.daily.mediaselector.util.DoubleUtils;
 

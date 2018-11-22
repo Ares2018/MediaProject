@@ -1,4 +1,4 @@
-package com.zjrb.daily.mediaselector;
+package com.zjrb.daily.mediaselector.config;
 
 import android.os.Parcel;
 import android.os.Parcelable;

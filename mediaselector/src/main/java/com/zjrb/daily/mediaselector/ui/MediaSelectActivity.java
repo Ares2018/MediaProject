@@ -18,6 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zjrb.daily.mediaselector.MediaSelector;
 import com.zjrb.daily.mediaselector.R;
 import com.zjrb.daily.mediaselector.binder.MediaBinder;
 import com.zjrb.daily.mediaselector.dao.LocalMediaDaoHelper;
@@ -157,8 +158,7 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
 
     private void complete() {
         if (selectedList != null && selectedList.size() > 0) {
-            Intent data = new Intent();
-            data.putParcelableArrayListExtra(KEY_DATA, selectedList);
+            Intent data = MediaSelector.putIntentResult(selectedList);
             setResult(RESULT_OK, data);
         }
         onBackPressed();

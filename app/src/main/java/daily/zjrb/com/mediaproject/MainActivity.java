@@ -1,15 +1,23 @@
 package daily.zjrb.com.mediaproject;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.zjrb.daily.mediaselector.MediaSelector;
+import com.zjrb.daily.mediaselector.config.MediaConfig;
+import com.zjrb.daily.mediaselector.entity.MediaEntity;
 import com.zjrb.daily.mediaselector.ui.MediaSelectActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private List<MediaEntity> selectList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,9 +36,27 @@ public class MainActivity extends AppCompatActivity {
                         .maxSelectNum(3)
                         .isShowSelectedNum(true)
                         .canPreview(true)
-                        .forResult(0);
+                        .forResult(MediaConfig.CHOOSE_REQUEST);
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case MediaConfig.CHOOSE_REQUEST:
+                    selectList = MediaSelector.obtainSelectResult(data);
+                    for(MediaEntity entity : selectList){
+                        Log.e("图片-----》", entity.getPath());
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
     }
 }

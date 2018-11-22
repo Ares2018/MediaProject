@@ -1,17 +1,10 @@
 package com.zjrb.daily.mediaselector.ui;
 
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 
-import com.zjrb.daily.mediaselector.MediaSelectionConfig;
+import com.zjrb.daily.mediaselector.config.MediaSelectionConfig;
 
 
 public abstract class MediaBaseActivity extends AppCompatActivity {
