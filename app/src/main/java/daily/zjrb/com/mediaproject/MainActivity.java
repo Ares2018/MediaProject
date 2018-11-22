@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
                         .getModel()
                         .maxSelectNum(3)
                         .isShowSelectedNum(true)
+                        .canPreview(true)
                         .forResult(0);
 
             }

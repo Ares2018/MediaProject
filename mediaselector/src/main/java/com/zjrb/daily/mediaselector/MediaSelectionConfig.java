@@ -11,6 +11,7 @@ public class MediaSelectionConfig implements Parcelable {
 
     public int maxSelectNum;
     public boolean isShowSelectedNum;
+    public boolean canPreview;
 
 
     private static final class InstanceHolder {
@@ -34,11 +35,13 @@ public class MediaSelectionConfig implements Parcelable {
     public MediaSelectionConfig(Parcel in) {
         this.maxSelectNum = in.readInt();
         this.isShowSelectedNum = in.readByte() != 0;
+        this.canPreview = in.readByte() != 0;
     }
 
     private void reset(){
         maxSelectNum = 9;
         isShowSelectedNum = true;
+        canPreview = true;
     }
 
     @Override
@@ -50,6 +53,7 @@ public class MediaSelectionConfig implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.maxSelectNum);
         dest.writeByte(this.isShowSelectedNum ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.canPreview ? (byte) 1 : (byte) 0);
     }
 
     public static final Creator<MediaSelectionConfig> CREATOR = new Creator<MediaSelectionConfig>() {

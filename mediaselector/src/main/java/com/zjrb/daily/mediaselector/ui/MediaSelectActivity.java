@@ -55,8 +55,6 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
     /**
      * 可选择最大个数, 默认1个
      */
-    private int maxNum = 1;
-    private boolean isShowSelectedNum = true;
     private String mTakePicPath;
     private File mTakePicFile;
 
@@ -76,7 +74,6 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
         setContentView(R.layout.activity_media_select);
         initView();
         StatusBarUtil.immersive(this);
-        initState();
         initPermission();
     }
 
@@ -96,10 +93,6 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
 
     }
 
-    private void initState() {
-        maxNum = config.maxSelectNum;
-        isShowSelectedNum = config.isShowSelectedNum;
-    }
 
     private void initPermission() {
 
@@ -184,10 +177,12 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
 
     @Override
     public void onItemClick(View itemView, int position) {
-        if (previewHolder == null) {
-            previewHolder = new PreviewViewHolder(items);
+        if(config.canPreview) {
+            if (previewHolder == null) {
+                previewHolder = new PreviewViewHolder(items);
+            }
+            previewHolder.show(position);
         }
-        previewHolder.show(position);
     }
 
 
@@ -198,15 +193,15 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
         if (tag instanceof MediaEntity) {
             if (isChecked) {
                 //已到最大个数
-                if (selectedList.size() == maxNum && 1 != maxNum) {
+                if (selectedList.size() == config.maxSelectNum && 1 != config.maxSelectNum) {
                     compoundButton.setOnCheckedChangeListener(null);
                     compoundButton.setChecked(false);
                     compoundButton.setOnCheckedChangeListener(this);
                     ((MediaEntity) tag).setSelected(false);
-                    Toast.makeText(this, "你最多只能选择" + maxNum + "张照片", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "你最多只能选择" + config.maxSelectNum + "张照片", Toast.LENGTH_SHORT).show();
                     return;
                     //单选
-                } else if (selectedList.size() == maxNum && 1 == maxNum) {
+                } else if (selectedList.size() == config.maxSelectNum && 1 == config.maxSelectNum) {
                     clearSelected();
                 }
                 selectedList.add((MediaEntity) tag);
@@ -217,7 +212,7 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
             }
         }
 
-        if (selectedList == null || selectedList.isEmpty() || !isShowSelectedNum) {
+        if (selectedList == null || selectedList.isEmpty() || !config.isShowSelectedNum) {
             tvComplete.setText("完成");
         } else {
             tvComplete.setText(selectedList.size() + " 完成");

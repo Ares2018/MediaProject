@@ -31,6 +31,11 @@ public class MediaSelectonModel {
         return this;
     }
 
+    public MediaSelectonModel canPreview(boolean canPreview){
+        selectionConfig.canPreview = canPreview;
+        return this;
+    }
+
     public void forResult(int requestCode){
         if(!DoubleUtils.isFastDoubleClick()){
             Activity activity = selector.getActivity();
