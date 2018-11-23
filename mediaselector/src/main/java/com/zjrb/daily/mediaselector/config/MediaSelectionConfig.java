@@ -2,6 +2,9 @@ package com.zjrb.daily.mediaselector.config;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.zjrb.daily.mediaselector.util.PictureFileUtils;
+
 /**
 * media 选择可配置项
 * @author zhengy
@@ -12,6 +15,11 @@ public class MediaSelectionConfig implements Parcelable {
     public int maxSelectNum;
     public boolean isShowSelectedNum;
     public boolean canPreview;
+    public boolean openCamera;
+    //后缀
+    public String suffixType;
+    //自定义照片存储路径
+    public String outputCameraPath;
 
 
     private static final class InstanceHolder {
@@ -36,12 +44,18 @@ public class MediaSelectionConfig implements Parcelable {
         this.maxSelectNum = in.readInt();
         this.isShowSelectedNum = in.readByte() != 0;
         this.canPreview = in.readByte() != 0;
+        this.openCamera = in.readByte() != 0;
+        this.suffixType = in.readString();
+        this.outputCameraPath = in.readString();
     }
 
     private void reset(){
         maxSelectNum = 9;
         isShowSelectedNum = true;
         canPreview = true;
+        openCamera = false;
+        suffixType = PictureFileUtils.POSTFIX;
+        outputCameraPath = "";
     }
 
     @Override
@@ -54,6 +68,9 @@ public class MediaSelectionConfig implements Parcelable {
         dest.writeInt(this.maxSelectNum);
         dest.writeByte(this.isShowSelectedNum ? (byte) 1 : (byte) 0);
         dest.writeByte(this.canPreview ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.openCamera ? (byte) 1 : (byte) 0);
+        dest.writeString(this.suffixType);
+        dest.writeString(this.outputCameraPath);
     }
 
     public static final Creator<MediaSelectionConfig> CREATOR = new Creator<MediaSelectionConfig>() {

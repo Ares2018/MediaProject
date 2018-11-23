@@ -33,6 +33,17 @@ public class MediaEntity implements Parcelable {
     private int mSize;
     private boolean isSelected;
 
+    private boolean camera;//是否是相机位
+    public boolean isCamera() {
+        return camera;
+    }
+
+    public void setCamera(boolean camera) {
+        this.camera = camera;
+    }
+
+
+
     public MediaEntity() {
     }
 

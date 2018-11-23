@@ -6,4 +6,5 @@
     <string name="data_scheme_https">https</string>
 
     <string name="data_host">www.devproject</string>
+    <string name="picture_take_picture">拍摄</string>
 </resources>

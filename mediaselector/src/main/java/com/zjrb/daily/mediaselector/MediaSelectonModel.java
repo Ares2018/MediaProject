@@ -37,6 +37,21 @@ public class MediaSelectonModel {
         return this;
     }
 
+    public MediaSelectonModel openCamera(boolean openCamera){
+        selectionConfig.openCamera = openCamera;
+        return this;
+    }
+
+    public MediaSelectonModel imageFormat(String suffixType) {
+        selectionConfig.suffixType = suffixType;
+        return this;
+    }
+
+    public MediaSelectonModel setOutputCameraPath(String outputCameraPath) {
+        selectionConfig.outputCameraPath = outputCameraPath;
+        return this;
+    }
+
     public void forResult(int requestCode){
         if(!DoubleUtils.isFastDoubleClick()){
             Activity activity = selector.getActivity();

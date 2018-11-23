@@ -2,8 +2,12 @@ package com.zjrb.daily.mediaselector.ui;
 
 import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -20,13 +24,16 @@ import android.widget.Toast;
 
 import com.zjrb.daily.mediaselector.MediaSelector;
 import com.zjrb.daily.mediaselector.R;
+import com.zjrb.daily.mediaselector.binder.CameraBinder;
 import com.zjrb.daily.mediaselector.binder.MediaBinder;
+import com.zjrb.daily.mediaselector.config.MediaConfig;
 import com.zjrb.daily.mediaselector.dao.LocalMediaDaoHelper;
 import com.zjrb.daily.mediaselector.decoration.GridSpacingItemDecoration;
 import com.zjrb.daily.mediaselector.entity.MediaEntity;
 import com.zjrb.daily.mediaselector.listener.OnItemClickListener;
 import com.zjrb.daily.mediaselector.permissions.RxPermissions;
 import com.zjrb.daily.mediaselector.ui.fragment.ImagePreviewFragment;
+import com.zjrb.daily.mediaselector.util.PictureFileUtils;
 import com.zjrb.daily.mediaselector.util.StatusBarUtil;
 
 import java.io.File;
@@ -35,6 +42,9 @@ import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import me.drakeet.multitype.ClassLinker;
+import me.drakeet.multitype.ItemViewBinder;
+import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
 import static com.zjrb.daily.mediaselector.ui.fragment.ImagePreviewFragment.*;
@@ -53,17 +63,11 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
     MultiTypeAdapter adapter;
     ArrayList<MediaEntity> items = new ArrayList<>();
 
-    /**
-     * 可选择最大个数, 默认1个
-     */
-    private String mTakePicPath;
-    private File mTakePicFile;
 
     /**
      * 选择的照片返回数据 key
      */
     public static final String KEY_DATA = "key_data";
-
 
 
     private ArrayList<MediaEntity> selectedList = new ArrayList<>();
@@ -88,7 +92,22 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
         recycler.setLayoutManager(new GridLayoutManager(this, 3));
         recycler.addItemDecoration(new GridSpacingItemDecoration(3, 3, true));
         adapter = new MultiTypeAdapter();
-        adapter.register(MediaEntity.class, new MediaBinder(this, this));
+//        adapter.register(MediaEntity.class, new MediaBinder(this, this));
+
+        adapter.register(MediaEntity.class).to(
+                new CameraBinder(this),
+                new MediaBinder(this, this)
+        ).withClassLinker(new ClassLinker<MediaEntity>() {
+            @NonNull
+            @Override
+            public Class<? extends ItemViewBinder<MediaEntity, ?>> index(int position, @NonNull MediaEntity mediaEntity) {
+                if (mediaEntity.isCamera()) {
+                    return CameraBinder.class;
+                } else {
+                    return MediaBinder.class;
+                }
+            }
+        });
 
         recycler.setAdapter(adapter);
 
@@ -140,6 +159,11 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
 
         @Override
         protected void onPostExecute(List<MediaEntity> results) {
+            if (config.openCamera) {
+                MediaEntity entity = new MediaEntity();
+                entity.setCamera(true);
+                items.add(entity);
+            }
             items.addAll(results);
             adapter.setItems(items);
             adapter.notifyDataSetChanged();
@@ -177,13 +201,93 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
 
     @Override
     public void onItemClick(View itemView, int position) {
-        if(config.canPreview) {
+        if (config.openCamera && position == 0) {
+            startCamera();
+        } else if (config.canPreview) {
             if (previewHolder == null) {
                 previewHolder = new PreviewViewHolder(items);
             }
             previewHolder.show(position);
         }
     }
+
+    private void startCamera(){
+        new RxPermissions(this).request(Manifest.permission.CAMERA)
+                .subscribe(new Observer<Boolean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Boolean aBoolean) {
+                        if (aBoolean) {
+                            startOpenCamera();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "拍照需要相机权限权限",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
+    }
+
+    private void startOpenCamera() {
+        // TODO: 2018/11/22 启动相机
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (cameraIntent.resolveActivity(getPackageManager()) != null) {
+            int type = MediaConfig.TYPE_IMAGE;
+            File cameraFile = PictureFileUtils.createCameraFile(this,
+                    type,
+                    outputCameraPath, config.suffixType);
+            cameraPath = cameraFile.getAbsolutePath();
+            Uri imageUri = parUri(cameraFile);
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            startActivityForResult(cameraIntent, MediaConfig.REQUEST_CAMERA);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            MediaEntity mediaEntity;
+            switch (requestCode) {
+                case MediaConfig.REQUEST_CAMERA:
+                    final File file = new File(cameraPath);
+                    sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
+                    int degree = PictureFileUtils.readPictureDegree(file.getAbsolutePath());
+                    rotateImage(degree, file);
+                    mediaEntity = new MediaEntity();
+                    mediaEntity.setPath(cameraPath);
+                    mediaEntity.setSelected(true);
+                    //添加到列表并选中
+                    items.add(1, mediaEntity);
+                    if(selectedList.size() < config.maxSelectNum){
+                        selectedList.add(mediaEntity);
+                    }else if(config.maxSelectNum == 1 && selectedList.size() == 1){
+                        MediaEntity entity = selectedList.get(0);
+                        int index = items.indexOf(entity);
+                        if(index >= 0){
+                            items.get(index).setSelected(false);
+                        }
+                        selectedList.remove(0);
+                        selectedList.add(mediaEntity);
+                    }
+                    adapter.notifyDataSetChanged();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
 
 
     @Override
