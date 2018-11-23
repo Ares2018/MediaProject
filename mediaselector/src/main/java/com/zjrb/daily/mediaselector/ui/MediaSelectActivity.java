@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -44,10 +45,10 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import me.drakeet.multitype.ClassLinker;
 import me.drakeet.multitype.ItemViewBinder;
-import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
-import static com.zjrb.daily.mediaselector.ui.fragment.ImagePreviewFragment.*;
+import static com.zjrb.daily.mediaselector.ui.fragment.ImagePreviewFragment.OnClick;
+import static com.zjrb.daily.mediaselector.ui.fragment.ImagePreviewFragment.newInstance;
 
 
 public class MediaSelectActivity extends MediaBaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, OnItemClickListener, OnClick {
@@ -212,7 +213,7 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
     }
 
     private void startCamera(){
-        new RxPermissions(this).request(Manifest.permission.CAMERA)
+        new RxPermissions(this).request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(new Observer<Boolean>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -238,8 +239,10 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
                 });
     }
 
+    /**
+     * 启动相机
+     */
     private void startOpenCamera() {
-        // TODO: 2018/11/22 启动相机
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (cameraIntent.resolveActivity(getPackageManager()) != null) {
             int type = MediaConfig.TYPE_IMAGE;
@@ -248,6 +251,9 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
                     outputCameraPath, config.suffixType);
             cameraPath = cameraFile.getAbsolutePath();
             Uri imageUri = parUri(cameraFile);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+                cameraIntent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            }
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
             startActivityForResult(cameraIntent, MediaConfig.REQUEST_CAMERA);
         }
@@ -421,7 +427,6 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
         public Fragment getItem(int position) {
             // TODO: 2018/9/13
             ImagePreviewFragment imagePreviewFragment = newInstance(data.get(position));
-//            imagePreviewFragment.setOnClick(MediaSelectActivity.this);
             return imagePreviewFragment;
         }
 

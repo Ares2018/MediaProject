@@ -1,16 +1,15 @@
 package daily.zjrb.com.mediaproject;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.zjrb.daily.mediaselector.MediaSelector;
 import com.zjrb.daily.mediaselector.config.MediaConfig;
 import com.zjrb.daily.mediaselector.entity.MediaEntity;
-import com.zjrb.daily.mediaselector.ui.MediaSelectActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
                 MediaSelector.create(MainActivity.this)
                         .getModel()
-                        .maxSelectNum(1)
+                        .maxSelectNum(3)
                         .isShowSelectedNum(true)
                         .canPreview(true)
                         .openCamera(true)
