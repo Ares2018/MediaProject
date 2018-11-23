@@ -34,7 +34,7 @@ import com.zjrb.daily.mediaselector.entity.MediaEntity;
 import com.zjrb.daily.mediaselector.listener.OnItemClickListener;
 import com.zjrb.daily.mediaselector.permissions.RxPermissions;
 import com.zjrb.daily.mediaselector.ui.fragment.ImagePreviewFragment;
-import com.zjrb.daily.mediaselector.util.PictureFileUtils;
+import com.zjrb.daily.mediaselector.util.MediaFileUtils;
 import com.zjrb.daily.mediaselector.util.StatusBarUtil;
 
 import java.io.File;
@@ -246,7 +246,7 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (cameraIntent.resolveActivity(getPackageManager()) != null) {
             int type = MediaConfig.TYPE_IMAGE;
-            File cameraFile = PictureFileUtils.createCameraFile(this,
+            File cameraFile = MediaFileUtils.createCameraFile(this,
                     type,
                     outputCameraPath, config.suffixType);
             cameraPath = cameraFile.getAbsolutePath();
@@ -268,7 +268,7 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
                 case MediaConfig.REQUEST_CAMERA:
                     final File file = new File(cameraPath);
                     sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
-                    int degree = PictureFileUtils.readPictureDegree(file.getAbsolutePath());
+                    int degree = MediaFileUtils.readPictureDegree(file.getAbsolutePath());
                     rotateImage(degree, file);
                     mediaEntity = new MediaEntity();
                     mediaEntity.setPath(cameraPath);

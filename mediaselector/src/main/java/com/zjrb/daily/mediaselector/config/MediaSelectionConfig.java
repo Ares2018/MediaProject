@@ -3,7 +3,7 @@ package com.zjrb.daily.mediaselector.config;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.zjrb.daily.mediaselector.util.PictureFileUtils;
+import com.zjrb.daily.mediaselector.util.MediaFileUtils;
 
 /**
 * media 选择可配置项
@@ -59,7 +59,7 @@ public class MediaSelectionConfig implements Parcelable {
         isShowSelectedNum = true;
         canPreview = true;
         openCamera = false;
-        suffixType = PictureFileUtils.POSTFIX;
+        suffixType = MediaFileUtils.POSTFIX;
         outputCameraPath = "";
         imageSpanCount = 3;
         zoomAnim = false;

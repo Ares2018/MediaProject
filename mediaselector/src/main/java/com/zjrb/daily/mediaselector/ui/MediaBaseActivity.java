@@ -11,7 +11,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 
 import com.zjrb.daily.mediaselector.config.MediaSelectionConfig;
-import com.zjrb.daily.mediaselector.util.PictureFileUtils;
+import com.zjrb.daily.mediaselector.util.MediaFileUtils;
 
 import java.io.File;
 
@@ -80,8 +80,8 @@ public abstract class MediaBaseActivity extends AppCompatActivity {
                 BitmapFactory.Options opts = new BitmapFactory.Options();//获取缩略图显示到屏幕上
                 opts.inSampleSize = 2;
                 Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), opts);
-                Bitmap bmp = PictureFileUtils.rotaingImageView(degree, bitmap);
-                PictureFileUtils.saveBitmapFile(bmp, file);
+                Bitmap bmp = MediaFileUtils.rotaingImageView(degree, bitmap);
+                MediaFileUtils.saveBitmapFile(bmp, file);
             } catch (Exception e) {
                 e.printStackTrace();
             }

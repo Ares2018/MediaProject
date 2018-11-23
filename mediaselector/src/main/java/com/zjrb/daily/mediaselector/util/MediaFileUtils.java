@@ -46,12 +46,12 @@ import java.util.Locale;
  * data：2017/5/30
  */
 
-public class PictureFileUtils {
+public class MediaFileUtils {
     private static String DEFAULT_CACHE_DIR = "picture_cache";
 
     public static final String POSTFIX = ".JPEG";
     public static final String POST_VIDEO = ".mp4";
-    public static final String APP_NAME = "PictureSelector";
+    public static final String APP_NAME = "MediaSelector";
     public static final String CAMERA_PATH = "/" + APP_NAME + "/CameraImage/";
     public static final String CROP_PATH = "/" + APP_NAME + "/CropImage/";
 
@@ -109,9 +109,9 @@ public class PictureFileUtils {
     /**
      * TAG for log messages.
      */
-    static final String TAG = "PictureFileUtils";
+    static final String TAG = "MediaFileUtils";
 
-    private PictureFileUtils() {
+    private MediaFileUtils() {
     }
 
     /**
@@ -341,7 +341,7 @@ public class PictureFileUtils {
             if (outputChannel != null) {
                 outputChannel.close();
             }
-            boolean success = PictureFileUtils.deleteFile(pathFrom);
+            boolean success = MediaFileUtils.deleteFile(pathFrom);
             return success;
         }
     }
