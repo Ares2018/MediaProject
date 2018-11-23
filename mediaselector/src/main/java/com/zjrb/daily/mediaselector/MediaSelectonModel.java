@@ -42,6 +42,11 @@ public class MediaSelectonModel {
         return this;
     }
 
+    public MediaSelectonModel imageSpanCount(int imageSpanCount) {
+        selectionConfig.imageSpanCount = imageSpanCount;
+        return this;
+    }
+
     public MediaSelectonModel imageFormat(String suffixType) {
         selectionConfig.suffixType = suffixType;
         return this;

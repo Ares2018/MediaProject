@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
                         .isShowSelectedNum(true)
                         .canPreview(true)
                         .openCamera(true)
+                        .imageSpanCount(4)
                         .forResult(MediaConfig.CHOOSE_REQUEST);
 
             }

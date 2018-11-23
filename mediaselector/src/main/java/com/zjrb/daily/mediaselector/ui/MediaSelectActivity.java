@@ -90,8 +90,8 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
         tvComplete.setOnClickListener(this);
 
         recycler = findViewById(R.id.recycleview);
-        recycler.setLayoutManager(new GridLayoutManager(this, 3));
-        recycler.addItemDecoration(new GridSpacingItemDecoration(3, 3, true));
+        recycler.setLayoutManager(new GridLayoutManager(this, config.imageSpanCount));
+        recycler.addItemDecoration(new GridSpacingItemDecoration(config.imageSpanCount, 3, true));
         adapter = new MultiTypeAdapter();
 //        adapter.register(MediaEntity.class, new MediaBinder(this, this));
 

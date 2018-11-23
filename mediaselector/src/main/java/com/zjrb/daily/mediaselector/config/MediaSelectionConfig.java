@@ -21,6 +21,8 @@ public class MediaSelectionConfig implements Parcelable {
     //自定义照片存储路径
     public String outputCameraPath;
 
+    public int imageSpanCount;
+
 
     private static final class InstanceHolder {
         private static final MediaSelectionConfig INSTANCE = new MediaSelectionConfig();
@@ -47,6 +49,7 @@ public class MediaSelectionConfig implements Parcelable {
         this.openCamera = in.readByte() != 0;
         this.suffixType = in.readString();
         this.outputCameraPath = in.readString();
+        this.imageSpanCount = in.readInt();
     }
 
     private void reset(){
@@ -56,6 +59,7 @@ public class MediaSelectionConfig implements Parcelable {
         openCamera = false;
         suffixType = PictureFileUtils.POSTFIX;
         outputCameraPath = "";
+        imageSpanCount = 3;
     }
 
     @Override
@@ -71,6 +75,7 @@ public class MediaSelectionConfig implements Parcelable {
         dest.writeByte(this.openCamera ? (byte) 1 : (byte) 0);
         dest.writeString(this.suffixType);
         dest.writeString(this.outputCameraPath);
+        dest.writeInt(this.imageSpanCount);
     }
 
     public static final Creator<MediaSelectionConfig> CREATOR = new Creator<MediaSelectionConfig>() {
