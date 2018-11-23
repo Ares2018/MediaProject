@@ -32,11 +32,12 @@ public class MainActivity extends AppCompatActivity {
 
                 MediaSelector.create(MainActivity.this)
                         .getModel()
-                        .maxSelectNum(3)
+                        .maxSelectNum(1)
                         .isShowSelectedNum(true)
                         .canPreview(true)
                         .openCamera(true)
-                        .imageSpanCount(4)
+                        .imageSpanCount(3)
+                        .isZoomAnim(true)
                         .forResult(MediaConfig.CHOOSE_REQUEST);
 
             }

@@ -22,6 +22,7 @@ public class MediaSelectionConfig implements Parcelable {
     public String outputCameraPath;
 
     public int imageSpanCount;
+    public boolean zoomAnim;
 
 
     private static final class InstanceHolder {
@@ -50,6 +51,7 @@ public class MediaSelectionConfig implements Parcelable {
         this.suffixType = in.readString();
         this.outputCameraPath = in.readString();
         this.imageSpanCount = in.readInt();
+        this.zoomAnim = in.readByte() != 0;
     }
 
     private void reset(){
@@ -60,6 +62,7 @@ public class MediaSelectionConfig implements Parcelable {
         suffixType = PictureFileUtils.POSTFIX;
         outputCameraPath = "";
         imageSpanCount = 3;
+        zoomAnim = false;
     }
 
     @Override
@@ -76,6 +79,7 @@ public class MediaSelectionConfig implements Parcelable {
         dest.writeString(this.suffixType);
         dest.writeString(this.outputCameraPath);
         dest.writeInt(this.imageSpanCount);
+        dest.writeByte(this.zoomAnim ? (byte) 1 : (byte) 0);
     }
 
     public static final Creator<MediaSelectionConfig> CREATOR = new Creator<MediaSelectionConfig>() {

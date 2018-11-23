@@ -97,7 +97,7 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
 
         adapter.register(MediaEntity.class).to(
                 new CameraBinder(this),
-                new MediaBinder(this, this)
+                new MediaBinder(this, this, config)
         ).withClassLinker(new ClassLinker<MediaEntity>() {
             @NonNull
             @Override

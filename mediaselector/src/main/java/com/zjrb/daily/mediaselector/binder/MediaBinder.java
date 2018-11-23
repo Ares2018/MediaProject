@@ -1,5 +1,7 @@
 package com.zjrb.daily.mediaselector.binder;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.zjrb.daily.mediaselector.R;
+import com.zjrb.daily.mediaselector.config.MediaSelectionConfig;
 import com.zjrb.daily.mediaselector.entity.MediaEntity;
 import com.zjrb.daily.mediaselector.listener.OnItemClickListener;
 
@@ -20,9 +23,10 @@ import me.drakeet.multitype.ItemViewBinder;
 
 public class MediaBinder extends ItemViewBinder<MediaEntity, MediaBinder.MediaHolder> {
 
-
+    private final static int DURATION = 450;
     CompoundButton.OnCheckedChangeListener listener;
     OnItemClickListener onItemClickListener;
+    MediaSelectionConfig config;
 
 
     class MediaHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -35,6 +39,7 @@ public class MediaBinder extends ItemViewBinder<MediaEntity, MediaBinder.MediaHo
             iv_picture = itemView.findViewById(R.id.iv_picture);
             check_box = itemView.findViewById(R.id.check_box);
             check_box.setOnCheckedChangeListener(listener);
+            check_box.setOnClickListener(this);
         }
 
         @Override
@@ -44,13 +49,23 @@ public class MediaBinder extends ItemViewBinder<MediaEntity, MediaBinder.MediaHo
                     onItemClickListener.onItemClick(view, getAdapterPosition());
                 }
             }
+            else if(view == check_box){
+                if(config.zoomAnim) {
+                    if (check_box.isChecked()) {
+                        zoom(iv_picture);
+                    } else {
+                        disZoom(iv_picture);
+                    }
+                }
+            }
         }
     }
 
 
-    public MediaBinder(CompoundButton.OnCheckedChangeListener listener, OnItemClickListener onItemClickListener) {
+    public MediaBinder(CompoundButton.OnCheckedChangeListener listener, OnItemClickListener onItemClickListener, MediaSelectionConfig config) {
         this.listener = listener;
         this.onItemClickListener = onItemClickListener;
+        this.config = config;
     }
 
     @NonNull
@@ -70,11 +85,32 @@ public class MediaBinder extends ItemViewBinder<MediaEntity, MediaBinder.MediaHo
         holder.check_box.setTag(null);
         holder.check_box.setChecked(item.isSelected());
         holder.check_box.setTag(item);
+        if(!item.isSelected() && config.zoomAnim){
+            disZoom(holder.iv_picture);
+        }
 
     }
 
 
 
+    private void zoom(ImageView iv_img) {
+            AnimatorSet set = new AnimatorSet();
+            set.playTogether(
+                    ObjectAnimator.ofFloat(iv_img, "scaleX", 1f, 1.12f),
+                    ObjectAnimator.ofFloat(iv_img, "scaleY", 1f, 1.12f)
+            );
+            set.setDuration(DURATION);
+            set.start();
+    }
 
+    private void disZoom(ImageView iv_img) {
+            AnimatorSet set = new AnimatorSet();
+            set.playTogether(
+                    ObjectAnimator.ofFloat(iv_img, "scaleX", 1.12f, 1f),
+                    ObjectAnimator.ofFloat(iv_img, "scaleY", 1.12f, 1f)
+            );
+            set.setDuration(DURATION);
+            set.start();
+    }
 
 }

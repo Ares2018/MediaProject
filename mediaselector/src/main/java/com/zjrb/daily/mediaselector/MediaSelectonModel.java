@@ -46,6 +46,10 @@ public class MediaSelectonModel {
         selectionConfig.imageSpanCount = imageSpanCount;
         return this;
     }
+    public MediaSelectonModel isZoomAnim(boolean zoomAnim) {
+        selectionConfig.zoomAnim = zoomAnim;
+        return this;
+    }
 
     public MediaSelectonModel imageFormat(String suffixType) {
         selectionConfig.suffixType = suffixType;
