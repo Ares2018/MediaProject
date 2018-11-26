@@ -23,7 +23,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.zjrb.daily.mediaselector.MediaSelector;
 import com.zjrb.daily.mediaselector.R;
 import com.zjrb.daily.mediaselector.binder.CameraBinder;
 import com.zjrb.daily.mediaselector.binder.MediaBinder;
@@ -168,18 +167,16 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
         if (view.getId() == R.id.iv_back) {
             onBackPressed();
         } else if (view.getId() == R.id.tv_complete) {
-            complete();
+            if(config.isCompress){
+                compressImage(selectedList);
+            }else {
+                onResult(selectedList);
+            }
         }
 
     }
 
-    private void complete() {
-        if (selectedList != null && selectedList.size() > 0) {
-            Intent data = MediaSelector.putIntentResult(selectedList);
-            setResult(RESULT_OK, data);
-        }
-        onBackPressed();
-    }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

@@ -11,4 +11,6 @@ public class MediaConfig {
     public final static int TYPE_IMAGE = 1;
     public final static int TYPE_VIDEO = 2;
     public final static int TYPE_AUDIO = 3;
+
+    public static final int MAX_COMPRESS_SIZE = 100;
 }

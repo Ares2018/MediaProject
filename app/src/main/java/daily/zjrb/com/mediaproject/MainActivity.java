@@ -32,12 +32,14 @@ public class MainActivity extends AppCompatActivity {
 
                 MediaSelector.create(MainActivity.this)
                         .getModel()
-                        .maxSelectNum(1)
+                        .maxSelectNum(3)
                         .isShowSelectedNum(true)
                         .canPreview(true)
                         .openCamera(true)
                         .imageSpanCount(3)
                         .isZoomAnim(true)
+                        .compress(true)
+                        .minimumCompressSize(100)
                         .forResult(MediaConfig.CHOOSE_REQUEST);
 
             }
@@ -53,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
                     selectList = MediaSelector.obtainSelectResult(data);
                     for(MediaEntity entity : selectList){
                         Log.e("图片-----》", entity.getPath());
+                        if(entity.isCompressed()){
+                            Log.e("压缩图片-----》", entity.getCompressPath());
+                        }
                     }
                     break;
 

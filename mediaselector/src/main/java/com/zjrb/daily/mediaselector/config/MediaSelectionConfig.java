@@ -24,6 +24,14 @@ public class MediaSelectionConfig implements Parcelable {
     public int imageSpanCount;
     public boolean zoomAnim;
 
+    //是否可压缩
+    public boolean isCompress;
+    //最小可压缩尺寸
+    public int minimumCompressSize;
+    //同步或者异步压缩
+    public boolean synOrAsy;
+    public String compressSavePath;
+
 
     private static final class InstanceHolder {
         private static final MediaSelectionConfig INSTANCE = new MediaSelectionConfig();
@@ -52,6 +60,10 @@ public class MediaSelectionConfig implements Parcelable {
         this.outputCameraPath = in.readString();
         this.imageSpanCount = in.readInt();
         this.zoomAnim = in.readByte() != 0;
+        this.isCompress = in.readByte() != 0;
+        this.minimumCompressSize = in.readInt();
+        this.synOrAsy = in.readByte() != 0;
+        this.compressSavePath = in.readString();
     }
 
     private void reset(){
@@ -63,6 +75,10 @@ public class MediaSelectionConfig implements Parcelable {
         outputCameraPath = "";
         imageSpanCount = 3;
         zoomAnim = false;
+        isCompress = false;
+        minimumCompressSize = MediaConfig.MAX_COMPRESS_SIZE;
+        synOrAsy = true;
+        compressSavePath = "";
     }
 
     @Override
@@ -80,6 +96,10 @@ public class MediaSelectionConfig implements Parcelable {
         dest.writeString(this.outputCameraPath);
         dest.writeInt(this.imageSpanCount);
         dest.writeByte(this.zoomAnim ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isCompress ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.minimumCompressSize);
+        dest.writeByte(this.synOrAsy ? (byte) 1 : (byte) 0);
+        dest.writeString(this.compressSavePath);
     }
 
     public static final Creator<MediaSelectionConfig> CREATOR = new Creator<MediaSelectionConfig>() {

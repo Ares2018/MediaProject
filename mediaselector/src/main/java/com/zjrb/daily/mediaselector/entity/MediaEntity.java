@@ -33,14 +33,11 @@ public class MediaEntity implements Parcelable {
     private int mSize;
     private boolean isSelected;
 
-    private boolean camera;//是否是相机位
-    public boolean isCamera() {
-        return camera;
-    }
+    private boolean compressed;
+    private String compressPath;
 
-    public void setCamera(boolean camera) {
-        this.camera = camera;
-    }
+    private boolean camera;//是否是相机位
+
 
 
 
@@ -63,6 +60,8 @@ public class MediaEntity implements Parcelable {
         mName = in.readString();
         mMediaType = in.readInt();
         mSize = in.readInt();
+        compressed = in.readByte() != 0;
+        compressPath = in.readString();
     }
 
     public static final Creator<MediaEntity> CREATOR = new Creator<MediaEntity>() {
@@ -133,6 +132,30 @@ public class MediaEntity implements Parcelable {
         isSelected = selected;
     }
 
+    public boolean isCamera() {
+        return camera;
+    }
+
+    public void setCamera(boolean camera) {
+        this.camera = camera;
+    }
+
+    public boolean isCompressed() {
+        return compressed;
+    }
+
+    public void setCompressed(boolean compressed) {
+        this.compressed = compressed;
+    }
+
+    public String getCompressPath() {
+        return compressPath;
+    }
+
+    public void setCompressPath(String compressPath) {
+        this.compressPath = compressPath;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -146,5 +169,7 @@ public class MediaEntity implements Parcelable {
         dest.writeString(mName);
         dest.writeInt(mMediaType);
         dest.writeInt(mSize);
+        dest.writeByte(this.compressed ? (byte) 1 : (byte) 0);
+        dest.writeString(compressPath);
     }
 }
