@@ -36,7 +36,6 @@ import io.reactivex.schedulers.Schedulers;
 public abstract class MediaBaseActivity extends AppCompatActivity {
 
     public static final String EXTRA_CONFIG = "MediaSelectionConfig";
-    public static final String TYPE = "image/jpeg";
     protected Context mContext;
     protected MediaSelectionConfig config;
 
@@ -181,9 +180,6 @@ public abstract class MediaBaseActivity extends AppCompatActivity {
         onResult(images);
     }
 
-    /**
-     * compress loading dialog
-     */
     protected void showCompressDialog() {
         if (!isFinishing()) {
             dismissCompressDialog();
@@ -192,9 +188,6 @@ public abstract class MediaBaseActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * dismiss compress dialog
-     */
     protected void dismissCompressDialog() {
         try {
             if (!isFinishing()
