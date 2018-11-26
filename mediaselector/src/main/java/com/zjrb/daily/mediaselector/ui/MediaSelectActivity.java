@@ -64,13 +64,6 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
     MultiTypeAdapter adapter;
     ArrayList<MediaEntity> items = new ArrayList<>();
 
-
-    /**
-     * 选择的照片返回数据 key
-     */
-    public static final String KEY_DATA = "key_data";
-
-
     private ArrayList<MediaEntity> selectedList = new ArrayList<>();
 
 
@@ -93,7 +86,6 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
         recycler.setLayoutManager(new GridLayoutManager(this, config.imageSpanCount));
         recycler.addItemDecoration(new GridSpacingItemDecoration(config.imageSpanCount, 3, true));
         adapter = new MultiTypeAdapter();
-//        adapter.register(MediaEntity.class, new MediaBinder(this, this));
 
         adapter.register(MediaEntity.class).to(
                 new CameraBinder(this),
@@ -372,7 +364,7 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
 
         public PreviewViewHolder(List<MediaEntity> list) {
             this.list = list;
-            viewPager = (ViewPager) previewFrame.findViewById(R.id.view_pager);
+            viewPager = previewFrame.findViewById(R.id.view_pager);
         }
 
         public void show(int index) {
