@@ -22,6 +22,16 @@ public class MediaSelectonModel {
         selectionConfig = MediaSelectionConfig.getCleanInstance();
     }
 
+    /**
+     * 如果直接打开相机，默认是单选模式，拍照后会直接返回（有设置压缩会先压缩文件再返回）
+     * @param camera
+     * @return
+     */
+    public MediaSelectonModel camera(boolean camera){
+        selectionConfig.camera = camera;
+        return this;
+    }
+
     public MediaSelectonModel maxSelectNum(int maxSelectNum){
         selectionConfig.maxSelectNum = maxSelectNum;
         return this;

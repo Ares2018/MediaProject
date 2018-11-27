@@ -18,6 +18,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -69,9 +70,15 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_media_select);
-        initView();
-        StatusBarUtil.immersive(this);
+        if(config.camera){
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN
+                    , WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            setContentView(R.layout.media_empty);
+        }else {
+            setContentView(R.layout.activity_media_select);
+            initView();
+            StatusBarUtil.immersive(this);
+        }
         initPermission();
     }
 
@@ -117,7 +124,11 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
                     @Override
                     public void onNext(Boolean aBoolean) {
                         if (aBoolean) {
-                            new MediaQueryTask().execute();
+                            if(config.camera){
+                                startCamera();
+                            }else {
+                                new MediaQueryTask().execute();
+                            }
                         } else {
                             Toast.makeText(getApplicationContext(), "选择照片需要访问权限",
                                     Toast.LENGTH_SHORT).show();
@@ -213,6 +224,9 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
                         if (aBoolean) {
                             startOpenCamera();
                         } else {
+                            if(config.camera){
+                                closeActivity();
+                            }
                             Toast.makeText(getApplicationContext(), "拍照需要相机权限权限",
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -263,19 +277,30 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
                     mediaEntity.setPath(cameraPath);
                     mediaEntity.setSelected(true);
                     //添加到列表并选中
-                    items.add(1, mediaEntity);
-                    if(selectedList.size() < config.maxSelectNum){
+
+                    if(config.camera){
+                        items.add(0, mediaEntity);
                         selectedList.add(mediaEntity);
-                    }else if(config.maxSelectNum == 1 && selectedList.size() == 1){
-                        MediaEntity entity = selectedList.get(0);
-                        int index = items.indexOf(entity);
-                        if(index >= 0){
-                            items.get(index).setSelected(false);
+                        if(config.isCompress){
+                            compressImage(selectedList);
+                        }else {
+                            onResult(selectedList);
                         }
-                        selectedList.remove(0);
-                        selectedList.add(mediaEntity);
+                    }else {
+                        items.add(1, mediaEntity);
+                        if (selectedList.size() < config.maxSelectNum) {
+                            selectedList.add(mediaEntity);
+                        } else if (config.maxSelectNum == 1 && selectedList.size() == 1) {
+                            MediaEntity entity = selectedList.get(0);
+                            int index = items.indexOf(entity);
+                            if (index >= 0) {
+                                items.get(index).setSelected(false);
+                            }
+                            selectedList.remove(0);
+                            selectedList.add(mediaEntity);
+                        }
+                        adapter.notifyDataSetChanged();
                     }
-                    adapter.notifyDataSetChanged();
                     break;
                 default:
                     break;

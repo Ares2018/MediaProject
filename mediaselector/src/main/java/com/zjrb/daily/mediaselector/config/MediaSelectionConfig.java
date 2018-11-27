@@ -12,9 +12,12 @@ import com.zjrb.daily.mediaselector.util.MediaFileUtils;
 **/
 public class MediaSelectionConfig implements Parcelable {
 
+    //直接启用相机
+    public boolean camera;
     public int maxSelectNum;
     public boolean isShowSelectedNum;
     public boolean canPreview;
+    //显示拍照按钮
     public boolean openCamera;
     //后缀
     public String suffixType;
@@ -52,6 +55,7 @@ public class MediaSelectionConfig implements Parcelable {
     }
 
     public MediaSelectionConfig(Parcel in) {
+        this.camera = in.readByte() != 0;
         this.maxSelectNum = in.readInt();
         this.isShowSelectedNum = in.readByte() != 0;
         this.canPreview = in.readByte() != 0;
@@ -67,6 +71,7 @@ public class MediaSelectionConfig implements Parcelable {
     }
 
     private void reset(){
+        camera = false;
         maxSelectNum = 9;
         isShowSelectedNum = true;
         canPreview = true;
@@ -88,6 +93,7 @@ public class MediaSelectionConfig implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte(this.camera ? (byte) 1 : (byte) 0);
         dest.writeInt(this.maxSelectNum);
         dest.writeByte(this.isShowSelectedNum ? (byte) 1 : (byte) 0);
         dest.writeByte(this.canPreview ? (byte) 1 : (byte) 0);

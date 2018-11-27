@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import com.zjrb.daily.mediaselector.MediaSelector;
+import com.zjrb.daily.mediaselector.R;
 import com.zjrb.daily.mediaselector.compress.Luban;
 import com.zjrb.daily.mediaselector.compress.OnCompressListener;
 import com.zjrb.daily.mediaselector.config.MediaMimeType;
@@ -206,6 +207,14 @@ public abstract class MediaBaseActivity extends AppCompatActivity {
             Intent data = MediaSelector.putIntentResult(images);
             setResult(RESULT_OK, data);
         }
-        onBackPressed();
+        closeActivity();
+    }
+
+
+    protected void closeActivity() {
+        finish();
+        if (config.camera) {
+            overridePendingTransition(0, R.anim.fade_out);
+        }
     }
 }

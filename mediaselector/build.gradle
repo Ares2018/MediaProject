@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.novoda.bintray-release'
 
 
 android {
@@ -25,78 +24,22 @@ android {
         }
     }
 
-}
-
-version = "0.0.1"
-group = "com.zgy.mediaselector"
-def siteUrl = ''    // project homepage
-def gitUrl = '' // project git
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
-
-// 根节点添加
-install {
-    repositories.mavenInstaller {
-        // This generates POM.xml with proper parameters
-        pom {
-            project {
-                packaging 'aar'
-                name 'MediaSelector For Android'
-                url siteUrl
-                // Set your license
-                licenses {
-                    license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                developers {
-                    developer { //填写的一些基本信息
-                        id 'miaoyanrssq'
-                        name 'gaoyang.zhen'
-                        email 'zhengy1018@foxmail.com'
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-                }
-            }
-        }
+    lintOptions {
+        abortOnError false
     }
+
 }
 
-//配置bintray参数
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-bintray {
-    user = properties.getProperty("bintrayUser")
-    key = properties.getProperty("bintrayApiKey")
-    configurations = ['archives']
-    pkg {
-        repo = "maven"               //跟上面创建的Maven仓库名字保持一致
-        name = "MediaSelector"                //发布到JCenter上的项目名字
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["Apache-2.0"]
-        publish = true
-    }
+
+
+
+publish {
+    userOrg = 'miaoyanrssq' // bintray 上注册的用户名
+    groupId = 'com.zgy.mediaselector' // 包名
+    artifactId = 'mediaselector' // library名
+    publishVersion = '0.0.2' // 版本号
+    desc = 'MediaSelector For Android'
+    website = 'https://github.com/miaoyanrssq/MediaProject'
 }
 
 
@@ -111,4 +54,5 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     implementation "io.reactivex.rxjava2:rxjava:2.0.5"
     implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
+
 }
