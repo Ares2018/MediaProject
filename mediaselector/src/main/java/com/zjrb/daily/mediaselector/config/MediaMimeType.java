@@ -12,6 +12,7 @@ import java.io.File;
  * package：com.luck.picture.lib.config
  * email：893855882@qq.com
  * data：2017/5/24
+ *
  * @author luck
  */
 
@@ -68,8 +69,11 @@ public final class MediaMimeType {
             case "audio/lamr":
             case "audio/3gpp":
                 return MediaConfig.TYPE_AUDIO;
+
+            default:
+                return MediaConfig.TYPE_IMAGE;
+
         }
-        return MediaConfig.TYPE_IMAGE;
     }
 
     /**
@@ -83,8 +87,9 @@ public final class MediaMimeType {
             case "image/gif":
             case "image/GIF":
                 return true;
+            default:
+                return false;
         }
-        return false;
     }
 
     /**
@@ -123,8 +128,9 @@ public final class MediaMimeType {
             case "video/webm":
             case "video/mp2ts":
                 return true;
+            default:
+                return false;
         }
-        return false;
     }
 
     /**
@@ -248,7 +254,6 @@ public final class MediaMimeType {
     }
 
 
-
     /**
      * 获取图片后缀
      *
@@ -282,7 +287,6 @@ public final class MediaMimeType {
             return ".png";
         }
     }
-
 
 
     public final static String JPEG = ".JPEG";
