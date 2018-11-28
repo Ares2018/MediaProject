@@ -9,7 +9,7 @@ https://bintray.com/miaoyanrssq/maven/mediaselector/_latestVersion
 ## 使用
 
 ```groovy
-implementation 'com.zgy.mediaselector:mediaselector:0.0.4'
+implementation 'com.zgy.mediaselector:mediaselector:0.0.5'
 ```
 
 默认配置：

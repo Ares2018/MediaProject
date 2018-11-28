@@ -3,13 +3,13 @@ apply plugin: 'com.novoda.bintray-release'
 
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 27
 
 
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 28
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
 
@@ -37,7 +37,7 @@ publish {
     userOrg = 'miaoyanrssq' // bintray 上注册的用户名
     groupId = 'com.zgy.mediaselector' // 包名
     artifactId = 'mediaselector' // library名
-    publishVersion = '0.0.4' // 版本号
+    publishVersion = '0.0.5' // 版本号
     desc = 'MediaSelector For Android'
     website = 'https://github.com/miaoyanrssq/MediaProject'
 }
@@ -45,8 +45,8 @@ publish {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    api 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    api 'com.android.support:recyclerview-v7:27.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
