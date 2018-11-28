@@ -37,7 +37,7 @@ publish {
     userOrg = 'miaoyanrssq' // bintray 上注册的用户名
     groupId = 'com.zgy.mediaselector' // 包名
     artifactId = 'mediaselector' // library名
-    publishVersion = '0.0.3' // 版本号
+    publishVersion = '0.0.4' // 版本号
     desc = 'MediaSelector For Android'
     website = 'https://github.com/miaoyanrssq/MediaProject'
 }

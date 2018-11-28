@@ -9,7 +9,7 @@ https://bintray.com/miaoyanrssq/maven/mediaselector/_latestVersion
 ## 使用
 
 ```groovy
-implementation 'com.zgy.mediaselector:mediaselector:0.0.3'
+implementation 'com.zgy.mediaselector:mediaselector:0.0.4'
 ```
 
 默认配置：
@@ -38,6 +38,7 @@ MediaSelector.create(MainActivity.this)
                         .imageFormat("image/JPEG")//自定义拍照后图片格式
                         .forResult(MediaConfig.CHOOSE_REQUEST);//页面回调，必填
 ```
+**在链式调用中添加了@CheckResult注释，提醒使用者使用完整的链式调用**
 
 回调处理：
 ```java

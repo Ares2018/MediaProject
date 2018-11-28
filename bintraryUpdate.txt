@@ -1,0 +1,2 @@
+上传library到maven命令
+./gradlew clean build bintrayUpload -PbintrayUser=a463674420 -PbintrayKey=6f5e4e11d2d25************************ -PdryRun=false

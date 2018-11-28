@@ -227,7 +227,7 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
                             if(config.camera){
                                 closeActivity();
                             }
-                            Toast.makeText(getApplicationContext(), "拍照需要相机权限权限",
+                            Toast.makeText(getApplicationContext(), "拍照需要相机权限",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
