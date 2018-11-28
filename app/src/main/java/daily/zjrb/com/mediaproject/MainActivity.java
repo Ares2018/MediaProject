@@ -40,7 +40,11 @@ public class MainActivity extends AppCompatActivity {
                         .imageSpanCount(3)
                         .isZoomAnim(true)
                         .compress(true)
+                        .synOrAsy(true)
                         .minimumCompressSize(100)
+                        .compressSavePath("")
+                        .setOutputCameraPath("")
+                        .imageFormat("image/JPEG")
                         .forResult(MediaConfig.CHOOSE_REQUEST);
 
             }
