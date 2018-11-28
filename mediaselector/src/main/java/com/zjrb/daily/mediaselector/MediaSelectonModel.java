@@ -2,6 +2,7 @@ package com.zjrb.daily.mediaselector;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.CheckResult;
 import android.support.v4.app.Fragment;
 
 import com.zjrb.daily.mediaselector.config.MediaSelectionConfig;
@@ -27,68 +28,71 @@ public class MediaSelectonModel {
      * @param camera
      * @return
      */
+    @CheckResult
     public MediaSelectonModel camera(boolean camera){
         selectionConfig.camera = camera;
         return this;
     }
-
+    @CheckResult
     public MediaSelectonModel maxSelectNum(int maxSelectNum){
         selectionConfig.maxSelectNum = maxSelectNum;
         return this;
     }
-
+    @CheckResult
     public MediaSelectonModel isShowSelectedNum(boolean isShowSelectedNum){
         selectionConfig.isShowSelectedNum = isShowSelectedNum;
         return this;
     }
-
+    @CheckResult
     public MediaSelectonModel canPreview(boolean canPreview){
         selectionConfig.canPreview = canPreview;
         return this;
     }
-
+    @CheckResult
     public MediaSelectonModel openCamera(boolean openCamera){
         selectionConfig.openCamera = openCamera;
         return this;
     }
 
+    @CheckResult
     public MediaSelectonModel imageSpanCount(int imageSpanCount) {
         selectionConfig.imageSpanCount = imageSpanCount;
         return this;
     }
+    @CheckResult
     public MediaSelectonModel isZoomAnim(boolean zoomAnim) {
         selectionConfig.zoomAnim = zoomAnim;
         return this;
     }
 
-
+    @CheckResult
     public MediaSelectonModel compress(boolean isCompress) {
         selectionConfig.isCompress = isCompress;
         return this;
     }
-
+    @CheckResult
     public MediaSelectonModel minimumCompressSize(int size) {
         selectionConfig.minimumCompressSize = size;
         return this;
     }
-
+    @CheckResult
     public MediaSelectonModel synOrAsy(boolean synOrAsy) {
         selectionConfig.synOrAsy = synOrAsy;
         return this;
     }
 
 
-
+    @CheckResult
     public MediaSelectonModel compressSavePath(String path) {
         selectionConfig.compressSavePath = path;
         return this;
     }
-
+    @CheckResult
     public MediaSelectonModel imageFormat(String suffixType) {
         selectionConfig.suffixType = suffixType;
         return this;
     }
-
+    @CheckResult
     public MediaSelectonModel setOutputCameraPath(String outputCameraPath) {
         selectionConfig.outputCameraPath = outputCameraPath;
         return this;

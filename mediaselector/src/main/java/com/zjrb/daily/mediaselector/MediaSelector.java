@@ -2,6 +2,7 @@ package com.zjrb.daily.mediaselector;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.annotation.CheckResult;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
@@ -44,6 +45,7 @@ public final class MediaSelector {
         return new MediaSelector(fragment);
     }
 
+    @CheckResult
     public MediaSelectonModel getModel(){
         return new MediaSelectonModel(this);
     }
