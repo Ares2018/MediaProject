@@ -1,7 +1,7 @@
 # 图片选择器封装
 > 一款封装了图片选择基础功能的组件
 
-![](images/pic.jpg)
+![](images/pic.png)
 
 ## 最新版本
 https://bintray.com/miaoyanrssq/maven/mediaselector/_latestVersion
