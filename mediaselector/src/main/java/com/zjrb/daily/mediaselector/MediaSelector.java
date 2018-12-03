@@ -33,7 +33,7 @@ public final class MediaSelector {
         this(fragment.getActivity(), fragment);
     }
 
-    public MediaSelector(Activity activity, Fragment fragment) {
+    private MediaSelector(Activity activity, Fragment fragment) {
         this.mActivity = new WeakReference<>(activity);
         this.mFragment = new WeakReference<>(fragment);
     }
