@@ -15,20 +15,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-* media选择统一工厂
-* @author zhengy
-* create at 2018/11/22 下午2:35
-**/
+ * media选择统一工厂
+ *
+ * @author zhengy
+ * create at 2018/11/22 下午2:35
+ **/
 public final class MediaSelector {
 
     private final WeakReference<Activity> mActivity;
     private final WeakReference<Fragment> mFragment;
 
-    private MediaSelector(Activity activity){
+    private MediaSelector(Activity activity) {
         this(activity, null);
     }
 
-    private MediaSelector(Fragment fragment){
+    private MediaSelector(Fragment fragment) {
         this(fragment.getActivity(), fragment);
     }
 
@@ -37,21 +38,21 @@ public final class MediaSelector {
         this.mFragment = new WeakReference<>(fragment);
     }
 
-    public static MediaSelector create(Activity activity){
-        return new MediaSelector(activity);
+    public static MediaSelectonModel create(Activity activity) {
+        return new MediaSelectonModel(new MediaSelector(activity));
     }
 
-    public static MediaSelector create(Fragment fragment){
-        return new MediaSelector(fragment);
+    public static MediaSelectonModel create(Fragment fragment) {
+        return new MediaSelectonModel(new MediaSelector(fragment));
     }
 
     @CheckResult
-    public MediaSelectonModel getModel(){
+    public MediaSelectonModel getModel() {
         return new MediaSelectonModel(this);
     }
 
 
-    public static Intent putIntentResult(List<MediaEntity> data){
+    public static Intent putIntentResult(List<MediaEntity> data) {
         return new Intent().putExtra(MediaConfig.EXTRA_RESULT_SELECTION, (Serializable) data);
     }
 

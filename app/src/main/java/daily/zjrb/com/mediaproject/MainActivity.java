@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 MediaSelector.create(MainActivity.this)
-                        .getModel()
                         .camera(false)
                         .maxSelectNum(3)
                         .isShowSelectedNum(true)
