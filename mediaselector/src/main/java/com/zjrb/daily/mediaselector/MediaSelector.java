@@ -37,20 +37,14 @@ public final class MediaSelector {
         this.mActivity = new WeakReference<>(activity);
         this.mFragment = new WeakReference<>(fragment);
     }
-
+    @CheckResult
     public static MediaSelectonModel create(Activity activity) {
         return new MediaSelectonModel(new MediaSelector(activity));
     }
-
+    @CheckResult
     public static MediaSelectonModel create(Fragment fragment) {
         return new MediaSelectonModel(new MediaSelector(fragment));
     }
-
-    @CheckResult
-    public MediaSelectonModel getModel() {
-        return new MediaSelectonModel(this);
-    }
-
 
     public static Intent putIntentResult(List<MediaEntity> data) {
         return new Intent().putExtra(MediaConfig.EXTRA_RESULT_SELECTION, (Serializable) data);
