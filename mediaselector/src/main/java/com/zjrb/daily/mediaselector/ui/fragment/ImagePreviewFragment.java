@@ -7,10 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.zjrb.daily.mediaselector.R;
+import com.zjrb.daily.mediaselector.ui.widget.photoview.PhotoView;
 
 
 public class ImagePreviewFragment extends Fragment{
@@ -19,13 +19,16 @@ public class ImagePreviewFragment extends Fragment{
     //图片url
     private String mUrl;
 
-    private ImageView preview;
+    private boolean gesture;
 
-    public static ImagePreviewFragment newInstance(String url) {
+    private PhotoView preview;
+
+    public static ImagePreviewFragment newInstance(String url, boolean gesture) {
         ImagePreviewFragment fragment = new ImagePreviewFragment();
 
         Bundle args = new Bundle();
         args.putString(ARGS, url);
+        args.putBoolean("gesture", gesture);
         fragment.setArguments(args);
         return fragment;
     }
@@ -37,6 +40,7 @@ public class ImagePreviewFragment extends Fragment{
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mUrl = getArguments().getString(ARGS);
+            gesture = getArguments().getBoolean("gesture");
 
         }
     }
@@ -51,11 +55,15 @@ public class ImagePreviewFragment extends Fragment{
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         preview = view.findViewById(R.id.preview);
+        if(gesture) {
+            preview.enable();
+            preview.enableRotate();
+        }
         loadImage();
     }
 
     private void loadImage() {
-        Glide.with(getContext()).load(mUrl).into(preview);
-    }
+        Glide.with(preview.getContext()).load(mUrl).into(preview);
 
+    }
 }

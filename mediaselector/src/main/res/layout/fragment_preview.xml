@@ -3,10 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <com.zjrb.daily.mediaselector.ui.widget.photoview.PhotoView
         android:id="@+id/preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="fitCenter"
 
         />
 </RelativeLayout>

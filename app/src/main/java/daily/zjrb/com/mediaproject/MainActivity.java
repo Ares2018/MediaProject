@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                         .compressSavePath("")
                         .setOutputCameraPath("")
                         .imageFormat("image/JPEG")
+                        .gesture(true)
                         .forResult(MediaConfig.CHOOSE_REQUEST);
 
             }

@@ -34,6 +34,8 @@ public class MediaSelectionConfig implements Parcelable {
     //同步或者异步压缩
     public boolean synOrAsy;
     public String compressSavePath;
+    //预览页面手势操作：缩放，旋转
+    public boolean gesture;
 
 
     private static final class InstanceHolder {
@@ -68,6 +70,7 @@ public class MediaSelectionConfig implements Parcelable {
         this.minimumCompressSize = in.readInt();
         this.synOrAsy = in.readByte() != 0;
         this.compressSavePath = in.readString();
+        this.gesture = in.readByte() != 0;
     }
 
     private void reset(){
@@ -84,6 +87,7 @@ public class MediaSelectionConfig implements Parcelable {
         minimumCompressSize = MediaConfig.MAX_COMPRESS_SIZE;
         synOrAsy = true;
         compressSavePath = "";
+        gesture = true;
     }
 
     @Override
@@ -106,6 +110,7 @@ public class MediaSelectionConfig implements Parcelable {
         dest.writeInt(this.minimumCompressSize);
         dest.writeByte(this.synOrAsy ? (byte) 1 : (byte) 0);
         dest.writeString(this.compressSavePath);
+        dest.writeByte(this.gesture ? (byte) 1 : (byte) 0);
     }
 
     public static final Creator<MediaSelectionConfig> CREATOR = new Creator<MediaSelectionConfig>() {

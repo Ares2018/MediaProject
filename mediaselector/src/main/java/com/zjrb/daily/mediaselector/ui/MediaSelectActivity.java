@@ -464,7 +464,7 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
         @Override
         public Fragment getItem(int position) {
             // TODO: 2018/9/13
-            ImagePreviewFragment imagePreviewFragment = newInstance(data.get(position));
+            ImagePreviewFragment imagePreviewFragment = newInstance(data.get(position), config.gesture);
             return imagePreviewFragment;
         }
 

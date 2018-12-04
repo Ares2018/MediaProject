@@ -97,6 +97,11 @@ public class MediaSelectonModel {
         selectionConfig.outputCameraPath = outputCameraPath;
         return this;
     }
+    @CheckResult
+    public MediaSelectonModel gesture(boolean gesture) {
+        selectionConfig.gesture = gesture;
+        return this;
+    }
 
     public void forResult(int requestCode){
         if(!DoubleUtils.isFastDoubleClick()){
