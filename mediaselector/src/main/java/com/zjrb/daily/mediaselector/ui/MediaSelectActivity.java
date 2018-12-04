@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,11 +48,10 @@ import me.drakeet.multitype.ClassLinker;
 import me.drakeet.multitype.ItemViewBinder;
 import me.drakeet.multitype.MultiTypeAdapter;
 
-import static com.zjrb.daily.mediaselector.ui.fragment.ImagePreviewFragment.OnClick;
 import static com.zjrb.daily.mediaselector.ui.fragment.ImagePreviewFragment.newInstance;
 
 
-public class MediaSelectActivity extends MediaBaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, OnItemClickListener, OnClick {
+public class MediaSelectActivity extends MediaBaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, OnItemClickListener {
 
 
     TextView tvComplete;
@@ -370,23 +370,32 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
         }
     }
 
-    @Override
-    public void onPreviewClick(View view) {
-        previewFrame.setVisibility(View.GONE);
-    }
 
 
-    private class PreviewViewHolder {
+    private class PreviewViewHolder implements ViewPager.OnPageChangeListener {
 
         ViewPager viewPager;
+        TextView imagePosition;
+        ImageView frameBack;
 
         PagerAdapter pagerAdapter;
 
         List<MediaEntity> list;
+        int size;
 
         public PreviewViewHolder(List<MediaEntity> list) {
             this.list = list;
             viewPager = previewFrame.findViewById(R.id.view_pager);
+            viewPager.addOnPageChangeListener(this);
+            imagePosition = previewFrame.findViewById(R.id.image_position);
+            frameBack = previewFrame.findViewById(R.id.frame_back);
+            frameBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    previewFrame.setVisibility(View.GONE);
+                }
+            });
+            size = config.openCamera ? list.size() - 1 : list.size();
         }
 
         public void show(int index) {
@@ -397,9 +406,9 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
             }
 
             viewPager.setCurrentItem(index, false);
+            imagePosition.setText(String.format("%d/%d", config.openCamera ? index : index + 1, size));
             previewFrame.setVisibility(View.VISIBLE);
         }
-
 
         /**
          * 获取图片List列表
@@ -415,6 +424,21 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
             return resultList;
         }
 
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            imagePosition.setText(String.format("%d/%d", config.openCamera ? position : position + 1, size));
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
     }
 
     /**

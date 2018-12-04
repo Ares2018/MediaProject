@@ -13,9 +13,8 @@ import com.bumptech.glide.Glide;
 import com.zjrb.daily.mediaselector.R;
 
 
-public class ImagePreviewFragment extends Fragment implements View.OnClickListener{
+public class ImagePreviewFragment extends Fragment{
 
-    OnClick click;
     private static final String ARGS = "args";
     //图片url
     private String mUrl;
@@ -31,10 +30,6 @@ public class ImagePreviewFragment extends Fragment implements View.OnClickListen
         return fragment;
     }
 
-    public void setOnClick(OnClick click)
-    {
-        this.click = click;
-    }
 
 
     @Override
@@ -56,7 +51,6 @@ public class ImagePreviewFragment extends Fragment implements View.OnClickListen
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         preview = view.findViewById(R.id.preview);
-        preview.setOnClickListener(this);
         loadImage();
     }
 
@@ -64,14 +58,4 @@ public class ImagePreviewFragment extends Fragment implements View.OnClickListen
         Glide.with(getContext()).load(mUrl).into(preview);
     }
 
-    @Override
-    public void onClick(View view) {
-        if(click != null){
-            click.onPreviewClick(view);
-        }
-    }
-
-    public interface OnClick{
-        void onPreviewClick(View view);
-    }
 }
