@@ -178,11 +178,7 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
         if (view.getId() == R.id.iv_back) {
             onBackPressed();
         } else if (view.getId() == R.id.tv_complete) {
-            if(config.isCompress){
-                compressImage(selectedList);
-            }else {
                 onResult(selectedList);
-            }
         }
 
     }
@@ -281,11 +277,7 @@ public class MediaSelectActivity extends MediaBaseActivity implements View.OnCli
                     if(config.camera){
                         items.add(0, mediaEntity);
                         selectedList.add(mediaEntity);
-                        if(config.isCompress){
-                            compressImage(selectedList);
-                        }else {
                             onResult(selectedList);
-                        }
                     }else {
                         items.add(1, mediaEntity);
                         if (selectedList.size() < config.maxSelectNum) {

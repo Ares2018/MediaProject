@@ -16,6 +16,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
+
+
 }
 
 dependencies {
@@ -29,4 +33,11 @@ dependencies {
 
     implementation project(':mediaselector')
 //    implementation 'com.zgy.mediaselector:mediaselector:0.0.4'
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'cn.zgy.picture:pictureEdit:0.0.3'
 }

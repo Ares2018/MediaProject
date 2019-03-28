@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
@@ -15,8 +14,6 @@ import android.text.TextUtils;
 
 import com.zjrb.daily.mediaselector.MediaSelector;
 import com.zjrb.daily.mediaselector.R;
-import com.zjrb.daily.mediaselector.compress.Luban;
-import com.zjrb.daily.mediaselector.compress.OnCompressListener;
 import com.zjrb.daily.mediaselector.config.MediaMimeType;
 import com.zjrb.daily.mediaselector.config.MediaSelectionConfig;
 import com.zjrb.daily.mediaselector.entity.MediaEntity;
@@ -24,14 +21,7 @@ import com.zjrb.daily.mediaselector.ui.dialog.MediaDialog;
 import com.zjrb.daily.mediaselector.util.MediaFileUtils;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.Flowable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 
 public abstract class MediaBaseActivity extends AppCompatActivity {
@@ -107,57 +97,6 @@ public abstract class MediaBaseActivity extends AppCompatActivity {
         }
     }
 
-
-    /**
-     * compressImage
-     */
-    protected void compressImage(final List<MediaEntity> result) {
-        showCompressDialog();
-        if (config.synOrAsy) {
-            Flowable.just(result)
-                    .observeOn(Schedulers.io())
-                    .map(new Function<List<MediaEntity>, List<File>>() {
-                        @Override
-                        public List<File> apply(@NonNull List<MediaEntity> list) throws Exception {
-                            List<File> files = Luban.with(mContext)
-                                    .setTargetDir(config.compressSavePath)
-                                    .ignoreBy(config.minimumCompressSize)
-                                    .loadMediaEntity(list).get();
-                            if (files == null) {
-                                files = new ArrayList<>();
-                            }
-                            return files;
-                        }
-                    })
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<List<File>>() {
-                        @Override
-                        public void accept(@NonNull List<File> files) throws Exception {
-                            handleCompressCallBack(result, files);
-                        }
-                    });
-        } else {
-            Luban.with(this)
-                    .loadMediaEntity(result)
-                    .ignoreBy(config.minimumCompressSize)
-                    .setTargetDir(config.compressSavePath)
-                    .setCompressListener(new OnCompressListener() {
-                        @Override
-                        public void onStart() {
-                        }
-
-                        @Override
-                        public void onSuccess(List<MediaEntity> list) {
-                            onResult(list);
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            onResult(result);
-                        }
-                    }).launch();
-        }
-    }
 
     /**
      * 重新构造已压缩的图片返回集合

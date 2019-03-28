@@ -66,29 +66,29 @@ public class MediaSelectonModel {
     }
 
     @CheckResult
-    public MediaSelectonModel compress(boolean isCompress) {
+    private MediaSelectonModel compress(boolean isCompress) {
         selectionConfig.isCompress = isCompress;
         return this;
     }
     @CheckResult
-    public MediaSelectonModel minimumCompressSize(int size) {
+    private MediaSelectonModel minimumCompressSize(int size) {
         selectionConfig.minimumCompressSize = size;
         return this;
     }
     @CheckResult
-    public MediaSelectonModel synOrAsy(boolean synOrAsy) {
+    private MediaSelectonModel synOrAsy(boolean synOrAsy) {
         selectionConfig.synOrAsy = synOrAsy;
         return this;
     }
 
 
     @CheckResult
-    public MediaSelectonModel compressSavePath(String path) {
+    private MediaSelectonModel compressSavePath(String path) {
         selectionConfig.compressSavePath = path;
         return this;
     }
     @CheckResult
-    public MediaSelectonModel imageFormat(String suffixType) {
+    private MediaSelectonModel imageFormat(String suffixType) {
         selectionConfig.suffixType = suffixType;
         return this;
     }

@@ -2,6 +2,7 @@ package daily.zjrb.com.mediaproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,6 +14,8 @@ import com.zjrb.daily.mediaselector.entity.MediaEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.zgy.picture.PictureEdit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,12 +41,7 @@ public class MainActivity extends AppCompatActivity {
                         .openCamera(true)
                         .imageSpanCount(3)
                         .isZoomAnim(true)
-                        .compress(true)
-                        .synOrAsy(true)
-                        .minimumCompressSize(100)
-                        .compressSavePath("")
                         .setOutputCameraPath("")
-                        .imageFormat("image/JPEG")
                         .gesture(true)
                         .forResult(MediaConfig.CHOOSE_REQUEST);
 
@@ -59,6 +57,13 @@ public class MainActivity extends AppCompatActivity {
                 case MediaConfig.CHOOSE_REQUEST:
                     selectList = MediaSelector.obtainSelectResult(data);
                     for(MediaEntity entity : selectList){
+                        PictureEdit.create()
+                                .inputFile(entity.getPath())
+                                .outputFile(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Picture"+ "/" + System.currentTimeMillis()/1000 + ".jpg")
+                                .quality(30)
+                                .optimize(true)
+                                .ignoreSize(100)
+                                .compress();
                         Log.e("图片-----》", entity.getPath());
                         if(entity.isCompressed()){
                             Log.e("压缩图片-----》", entity.getCompressPath());
