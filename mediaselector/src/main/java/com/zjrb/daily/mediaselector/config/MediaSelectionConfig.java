@@ -11,7 +11,7 @@ import com.zjrb.daily.mediaselector.util.MediaFileUtils;
 * create at 2018/11/22 下午2:57
 **/
 public class MediaSelectionConfig implements Parcelable {
-
+    public int mimeType;
     //直接启用相机
     public boolean camera;
     public int maxSelectNum;
@@ -36,6 +36,7 @@ public class MediaSelectionConfig implements Parcelable {
     public String compressSavePath;
     //预览页面手势操作：缩放，旋转
     public boolean gesture;
+    public boolean isGif;
 
 
     private static final class InstanceHolder {
@@ -57,6 +58,7 @@ public class MediaSelectionConfig implements Parcelable {
     }
 
     public MediaSelectionConfig(Parcel in) {
+        this.mimeType = in.readInt();
         this.camera = in.readByte() != 0;
         this.maxSelectNum = in.readInt();
         this.isShowSelectedNum = in.readByte() != 0;
@@ -71,9 +73,11 @@ public class MediaSelectionConfig implements Parcelable {
         this.synOrAsy = in.readByte() != 0;
         this.compressSavePath = in.readString();
         this.gesture = in.readByte() != 0;
+        this.isGif = in.readByte() != 0;
     }
 
     private void reset(){
+        mimeType = MediaConfig.TYPE_IMAGE;
         camera = false;
         maxSelectNum = 9;
         isShowSelectedNum = true;
@@ -88,6 +92,7 @@ public class MediaSelectionConfig implements Parcelable {
         synOrAsy = true;
         compressSavePath = "";
         gesture = true;
+        isGif = false;
     }
 
     @Override
@@ -97,6 +102,7 @@ public class MediaSelectionConfig implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.mimeType);
         dest.writeByte(this.camera ? (byte) 1 : (byte) 0);
         dest.writeInt(this.maxSelectNum);
         dest.writeByte(this.isShowSelectedNum ? (byte) 1 : (byte) 0);
@@ -111,6 +117,7 @@ public class MediaSelectionConfig implements Parcelable {
         dest.writeByte(this.synOrAsy ? (byte) 1 : (byte) 0);
         dest.writeString(this.compressSavePath);
         dest.writeByte(this.gesture ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isGif ? (byte) 1 : (byte) 0);
     }
 
     public static final Creator<MediaSelectionConfig> CREATOR = new Creator<MediaSelectionConfig>() {

@@ -16,7 +16,7 @@ import com.zjrb.daily.mediaselector.MediaSelector;
 import com.zjrb.daily.mediaselector.R;
 import com.zjrb.daily.mediaselector.config.MediaMimeType;
 import com.zjrb.daily.mediaselector.config.MediaSelectionConfig;
-import com.zjrb.daily.mediaselector.entity.MediaEntity;
+import com.zjrb.daily.mediaselector.entity.LocalMedia;
 import com.zjrb.daily.mediaselector.ui.dialog.MediaDialog;
 import com.zjrb.daily.mediaselector.util.MediaFileUtils;
 
@@ -41,6 +41,7 @@ public abstract class MediaBaseActivity extends AppCompatActivity {
         } else {
             config = MediaSelectionConfig.getInstance();
         }
+        setTheme(R.style.picture_default_style);
         super.onCreate(savedInstanceState);
         mContext = this;
         initConfig();
@@ -104,12 +105,12 @@ public abstract class MediaBaseActivity extends AppCompatActivity {
      * @param images
      * @param files
      */
-    private void handleCompressCallBack(List<MediaEntity> images, List<File> files) {
+    private void handleCompressCallBack(List<LocalMedia> images, List<File> files) {
         if (files.size() == images.size()) {
             for (int i = 0, j = images.size(); i < j; i++) {
                 // 压缩成功后的地址
                 String path = files.get(i).getPath();
-                MediaEntity image = images.get(i);
+                LocalMedia image = images.get(i);
                 // 如果是网络图片则不压缩
                 boolean http = MediaMimeType.isHttp(path);
                 boolean eqTrue = !TextUtils.isEmpty(path) && http;
@@ -140,7 +141,7 @@ public abstract class MediaBaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void onResult(List<MediaEntity> images) {
+    protected void onResult(List<LocalMedia> images) {
         dismissCompressDialog();
         if (images != null && images.size() > 0) {
             Intent data = MediaSelector.putIntentResult(images);

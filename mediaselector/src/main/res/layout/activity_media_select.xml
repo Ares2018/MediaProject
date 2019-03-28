@@ -29,7 +29,8 @@
             android:id="@+id/tv_title"
             style="@style/ToolbarTitle"
             android:text="所有照片"
-            android:textColor="@color/_ffffff" />
+            android:textColor="@color/_ffffff"
+            android:drawableRight="@drawable/arrow_down"/>
 
         <TextView
             android:id="@+id/tv_complete"

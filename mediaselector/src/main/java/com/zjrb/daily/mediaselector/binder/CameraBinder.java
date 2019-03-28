@@ -7,12 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zjrb.daily.mediaselector.R;
-import com.zjrb.daily.mediaselector.entity.MediaEntity;
+import com.zjrb.daily.mediaselector.entity.LocalMedia;
 import com.zjrb.daily.mediaselector.listener.OnItemClickListener;
 
 import me.drakeet.multitype.ItemViewBinder;
 
-public class CameraBinder extends ItemViewBinder<MediaEntity, CameraBinder.CameraHolder> {
+public class CameraBinder extends ItemViewBinder<LocalMedia, CameraBinder.CameraHolder> {
 
     OnItemClickListener onItemClickListener;
 
@@ -47,7 +47,7 @@ public class CameraBinder extends ItemViewBinder<MediaEntity, CameraBinder.Camer
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull CameraHolder holder, @NonNull MediaEntity item) {
+    protected void onBindViewHolder(@NonNull CameraHolder holder, @NonNull LocalMedia item) {
 
     }
 

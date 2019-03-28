@@ -7,4 +7,8 @@
 
     <string name="data_host">www.devproject</string>
     <string name="picture_take_picture">拍摄</string>
+    <string name="picture_all_audio">所有音频</string>
+    <string name="picture_camera_roll">相机胶卷</string>
+    <string name="picture_empty_audio_title">无音频文件\n</string>
+    <string name="picture_empty_title">无视频或照片\n</string>
 </resources>

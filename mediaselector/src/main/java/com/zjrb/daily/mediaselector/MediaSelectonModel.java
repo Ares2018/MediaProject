@@ -23,6 +23,12 @@ public class MediaSelectonModel {
         selectionConfig = MediaSelectionConfig.getCleanInstance();
     }
 
+    @CheckResult
+    public MediaSelectonModel type(int mimeType){
+        selectionConfig.mimeType = mimeType;
+        return this;
+    }
+
     /**
      * 如果直接打开相机，默认是单选模式，拍照后会直接返回（有设置压缩会先压缩文件再返回）
      * @param camera

@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.zjrb.daily.mediaselector.config.MediaConfig;
-import com.zjrb.daily.mediaselector.entity.MediaEntity;
+import com.zjrb.daily.mediaselector.entity.LocalMedia;
 
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
@@ -46,14 +46,14 @@ public final class MediaSelector {
         return new MediaSelectonModel(new MediaSelector(fragment));
     }
 
-    public static Intent putIntentResult(List<MediaEntity> data) {
+    public static Intent putIntentResult(List<LocalMedia> data) {
         return new Intent().putExtra(MediaConfig.EXTRA_RESULT_SELECTION, (Serializable) data);
     }
 
-    public static List<MediaEntity> obtainSelectResult(Intent data) {
-        List<MediaEntity> result = new ArrayList<>();
+    public static List<LocalMedia> obtainSelectResult(Intent data) {
+        List<LocalMedia> result = new ArrayList<>();
         if (data != null) {
-            result = (List<MediaEntity>) data.getSerializableExtra(MediaConfig.EXTRA_RESULT_SELECTION);
+            result = (List<LocalMedia>) data.getSerializableExtra(MediaConfig.EXTRA_RESULT_SELECTION);
             if (result == null) {
                 result = new ArrayList<>();
             }

@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.zjrb.daily.mediaselector.MediaSelector;
 import com.zjrb.daily.mediaselector.config.MediaConfig;
-import com.zjrb.daily.mediaselector.entity.MediaEntity;
+import com.zjrb.daily.mediaselector.entity.LocalMedia;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ import cn.zgy.picture.PictureEdit;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<MediaEntity> selectList = new ArrayList<>();
+    private List<LocalMedia> selectList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 MediaSelector.create(MainActivity.this)
+                        .type(MediaConfig.TYPE_ALL)
                         .camera(false)
                         .maxSelectNum(3)
                         .isShowSelectedNum(true)
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             switch (requestCode) {
                 case MediaConfig.CHOOSE_REQUEST:
                     selectList = MediaSelector.obtainSelectResult(data);
-                    for(MediaEntity entity : selectList){
+                    for(LocalMedia entity : selectList){
                         PictureEdit.create()
                                 .inputFile(entity.getPath())
                                 .outputFile(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Picture"+ "/" + System.currentTimeMillis()/1000 + ".jpg")

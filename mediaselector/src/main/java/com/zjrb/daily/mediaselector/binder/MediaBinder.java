@@ -15,13 +15,13 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.zjrb.daily.mediaselector.R;
 import com.zjrb.daily.mediaselector.config.MediaSelectionConfig;
-import com.zjrb.daily.mediaselector.entity.MediaEntity;
+import com.zjrb.daily.mediaselector.entity.LocalMedia;
 import com.zjrb.daily.mediaselector.listener.OnItemClickListener;
 
 import me.drakeet.multitype.ItemViewBinder;
 
 
-public class MediaBinder extends ItemViewBinder<MediaEntity, MediaBinder.MediaHolder> {
+public class MediaBinder extends ItemViewBinder<LocalMedia, MediaBinder.MediaHolder> {
 
     private final static int DURATION = 450;
     CompoundButton.OnCheckedChangeListener listener;
@@ -76,16 +76,16 @@ public class MediaBinder extends ItemViewBinder<MediaEntity, MediaBinder.MediaHo
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull MediaHolder holder, @NonNull MediaEntity item) {
-        if(TextUtils.isEmpty(item.getThumbnail())) {
+    protected void onBindViewHolder(@NonNull MediaHolder holder, @NonNull LocalMedia item) {
+//        if(TextUtils.isEmpty(item.getThumbnail())) {
             Glide.with(holder.iv_picture.getContext()).load(item.getPath()).into(holder.iv_picture);
-        }else{
-            Glide.with(holder.iv_picture.getContext()).load(item.getThumbnail()).into(holder.iv_picture);
-        }
+//        }else{
+//            Glide.with(holder.iv_picture.getContext()).load(item.getThumbnail()).into(holder.iv_picture);
+//        }
         holder.check_box.setTag(null);
-        holder.check_box.setChecked(item.isSelected());
+        holder.check_box.setChecked(item.isChecked());
         holder.check_box.setTag(item);
-        if(!item.isSelected() && config.zoomAnim){
+        if(!item.isChecked() && config.zoomAnim){
             disZoom(holder.iv_picture);
         }
 

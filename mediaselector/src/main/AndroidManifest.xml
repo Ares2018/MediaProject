@@ -16,7 +16,11 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".ui.MediaSelectActivity">
+        <activity android:name=".ui.MediaSelectActivity"
+            android:screenOrientation="portrait"
+            >
+
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
